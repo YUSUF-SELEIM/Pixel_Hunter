@@ -8,23 +8,59 @@ const imageData = [
   {
     id: '1',
     src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-1.webp',
-    alt: 'Image 1',
-    title: 'Image 1',
-    description: 'Description of Image 1',
+    alt: 'A Crowd of Weird Faces I',
+    characters:
+      [
+        {
+          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_I/Bully.webp',
+          Name: 'Bully',
+        },
+        {
+          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_I/Knife-Nose.webp',
+          Name: 'Knife Nose',
+        },
+        {
+          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_I/Potato-Head.webp',
+          Name: 'Potato Head',
+        }
+      ],
   },
   {
     id: '2',
     src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-3.webp',
-    alt: 'Image 2',
-    title: 'Image 2',
-    description: 'Description of Image 2',
+    alt: 'A Crowd of Weird Faces II',
+    characters:
+      [
+        {
+          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_II/Baby.webp',
+          Name: 'Baby',
+        },
+        {
+          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_II/Doggo.webp',
+          Name: 'Doggo',
+        },
+        {
+          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_II/Olive.webp',
+          Name: 'Olive',
+        },
+        {
+          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_II/Yusuf.webp',
+          Name: 'Yusuf',
+        }
+      ],
+
   },
   {
     id: '3',
     src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-2.webp',
-    alt: 'Image 3',
-    title: 'Image 3',
-    description: 'Description of Image 3',
+    alt: 'Ice Creams and Lollipop',
+    characters:
+      [
+        {
+          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_III/Cute-Lollipop.webp',
+          Name: 'Cute Lollipop',
+        },
+      ],
   },
 ];
 
