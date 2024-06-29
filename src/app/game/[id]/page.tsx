@@ -14,14 +14,14 @@ const imageData = [
   },
   {
     id: '2',
-    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-2.webp',
+    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-3.webp',
     alt: 'Image 2',
     title: 'Image 2',
     description: 'Description of Image 2',
   },
   {
     id: '3',
-    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-3.webp',
+    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-2.webp',
     alt: 'Image 3',
     title: 'Image 3',
     description: 'Description of Image 3',

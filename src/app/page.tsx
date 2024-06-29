@@ -14,7 +14,7 @@ const images = [
     description: 'Find Some Strange Faces to Win',
   },
   {
-    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-2.webp',
+    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-3.webp',
     alt: 'A Crowd of Weird Faces II',
     title: 'A Crowd of Weird Faces II',
     level: 'Medium',
@@ -22,7 +22,7 @@ const images = [
     description: 'Find More Strange Faces to Win',
   },
   {
-    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-3.webp',
+    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-2.webp',
     alt: 'Ice Creams and Lollipop',
     title: 'Ice Creams and Lollipop',
     level: 'Hard',
