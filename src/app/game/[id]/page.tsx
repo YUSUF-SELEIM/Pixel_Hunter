@@ -3,127 +3,68 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-
-const imageData = [
-  {
-    id: '1',
-    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-1.webp',
-    alt: 'A Crowd of Weird Faces I',
-    characters:
-      [
-        {
-          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_I/Bully.webp',
-          Name: 'Bully',
-          position: { x: 93, y: 28 },
-          found: false
-        },
-        {
-          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_I/Knife-Nose.webp',
-          Name: 'Knife Nose',
-          position: { x: 6, y: 16 },
-          found: false,
-        },
-        {
-          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_I/Potato-Head.webp',
-          Name: 'Potato Head',
-          position: { x: 80, y: 61 },
-          found: false,
-        }
-      ],
-  },
-  {
-    id: '2',
-    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-3.webp',
-    alt: 'A Crowd of Weird Faces II',
-    characters:
-      [
-        {
-          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_II/Baby.webp',
-          Name: 'Baby',
-          position: { x: 88, y: 28 },
-          found: false,
-        },
-        {
-          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_II/Doggo.webp',
-          Name: 'Doggo',
-          position: { x: 41, y: 96 },
-          found: false,
-        },
-        {
-          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_II/Olive.webp',
-          Name: 'Olive',
-          position: { x: 75, y: 66 },
-          found: false,
-        },
-        {
-          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_II/Yusuf.webp',
-          Name: 'Yusuf',
-          position: { x: 21, y: 5 },
-          found: false,
-        }
-      ],
-
-  },
-  {
-    id: '3',
-    src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-2.webp',
-    alt: 'Ice Creams and Lollipop',
-    characters:
-      [
-        {
-          src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Game_III/Cute-Lollipop.webp',
-          Name: 'Cute Lollipop',
-          position: { x: 77, y: 21 },
-          found: false,
-        },
-      ],
-  },
-];
+import imageData from '@/data/ImageData';
+import Modal from '../../components/modal';
 
 function Game({ params }: { params: { id: string } }) {
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupPosition, setPopupPosition] = useState<{ x: string; y: string }>({ x: '0%', y: '0%' });
   const [circlePosition, setCirclePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [circleVisible, setCircleVisible] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [charactersFound, setCharactersFound] = useState<string[]>([]);
+  const [gameOver, setGameOver] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     // Function to update found characters
     const markFoundCharacters = () => {
       // Clear existing markers before adding new ones
       document.querySelectorAll('.character-marker').forEach((marker) => marker.remove());
-  
+
       imageData.forEach((image) => {
         image.characters.forEach((character) => {
           if (character.found) {
             const marker = document.createElement('div');
-            marker.classList.add('character-marker'); // Add a class for easy selection/removal
-            marker.style.position = 'absolute';
+            marker.classList.add(
+              'character-marker',
+              'absolute',
+              'text-7xl',
+              'text-green-500',
+              'transform',
+              '-translate-x-1/2',
+              '-translate-y-1/2'
+            );
             marker.style.left = `${character.position.x}%`;
             marker.style.top = `${character.position.y}%`;
-            marker.style.width = '10px';
-            marker.style.height = '10px';
-            marker.style.backgroundColor = 'red'; // Example color for the marker
-            marker.style.borderRadius = '50%'; // Round shape
-            marker.style.transform = 'translate(-50%, -50%)'; // Center the marker
-  
+            marker.textContent = '✔';
             const imageElement = document.getElementById('image');
 
-            if (!imageElement) {
-              return
-            } 
-                imageElement.appendChild(marker); // Fallback to body if container not found
-          
-            
-            console.log('Added marker for:', character.Name);   
+            if (imageElement) {
+              imageElement.appendChild(marker); // Fallback to body if container not found
+            } else {
+              document.body.appendChild(marker); // Fallback to body if container not found
+            }
+            console.log('Added marker for:', character.Name);
           }
         });
       });
     };
-  
     // Call the function to initially place markers
     markFoundCharacters();
   }, [charactersFound]);
-  
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (showToast) {
+      setShowToast(true);
+      timer = setTimeout(() => {
+        setShowToast(false);
+      }, 1000); // Hide toast after 3 seconds
+    }
+    return () => clearTimeout(timer);
+  }, [showToast]);
+
   const image = imageData.find((img) => img.id === params.id);
 
   if (!image) {
@@ -152,7 +93,7 @@ function Game({ params }: { params: { id: string } }) {
         popupX = `${xPercent - 45}%`; // Adjust popup to the left
       }
       if (yPercent >= 50) {
-        popupY = `${yPercent - 40}%`; // Adjust popup above
+        popupY = `${yPercent - 60}%`; // Adjust popup above
       }
     } else {
       // Adjustments for larger screens
@@ -163,7 +104,6 @@ function Game({ params }: { params: { id: string } }) {
         popupY = `${yPercent - 12}%`; // Adjust popup above
       }
     }
-
     setPopupPosition({ x: popupX, y: popupY });
     setCirclePosition({ x: xPercent, y: yPercent });
     setPopupVisible(true);
@@ -198,11 +138,19 @@ function Game({ params }: { params: { id: string } }) {
       );
       image.characters = updatedCharacters;
       setCharactersFound([...charactersFound, characterName]);
+    } else {
+      console.log('Not close enough to:', characterName);
+      setShowToast(true);
+    }
+    // Check if all characters have been found
+    const allCharactersFound = image.characters.every((char) => char.found);
+    if (allCharactersFound) {
+      setGameOver(true);
+      setShowModal(true);
     }
     setPopupVisible(false);
   }
 
-  
   return (
     <>
       <Header />
@@ -216,7 +164,6 @@ function Game({ params }: { params: { id: string } }) {
             height={1000}
             className="cursor-crosshair"
           />
-          
           {circleVisible && (
             <div
               className="absolute rounded-full border-4 border-red-500 border-dashed"
@@ -262,6 +209,16 @@ function Game({ params }: { params: { id: string } }) {
           </div>
         )}
       </div>
+      {showToast && (
+        <div className="fixed top-0 left-0 right-0 flex justify-center mt-3 slide-down">
+          <div className="bg-red-500 text-white py-2 px-4 rounded">
+            Try Again!
+          </div>
+        </div>
+      )}
+      {gameOver && (
+        <Modal showModal={showModal} setShowModal={setShowModal} />
+      )}
       <Footer />
     </>
   );
