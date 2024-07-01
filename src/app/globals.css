@@ -31,3 +31,16 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slide-down {
+  animation: slideDown 0.2s ease-in-out;
+}
