@@ -15,47 +15,21 @@ export const startGame = async (imageID: string) => {
   }
 };
 
-export const endGame = async (sessionID: string, elapsedTime: number) => {
+// Function to submit username with session ID
+export const submitUsernameAndTimeTaken = async (sessionID: string, userName: string, timeTaken: number) => {
   try {
-    // Retrieve the game session 
-    const game = await prisma.game.findUnique({
-      where: { id: sessionID },
-    });
-
-    if (!game) {
-      throw new Error('Game session not found.');
-    }
-
     // Format time taken into minutes, seconds, and milliseconds
-    const minutes = Math.floor(elapsedTime / (1000 * 60)).toString().padStart(2, '0');
-    const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000).toString().padStart(2, '0');
-    const milliseconds = Math.floor((elapsedTime % 1000) / 10).toString().padStart(2, '0');
+    const minutes = Math.floor(timeTaken / (1000 * 60)).toString().padStart(2, '0');
+    const seconds = Math.floor((timeTaken % (1000 * 60)) / 1000).toString().padStart(2, '0');
+    const milliseconds = Math.floor((timeTaken % 1000) / 10).toString().padStart(2, '0');
 
     const formattedTime = `${minutes}:${seconds}:${milliseconds}`;
 
-    await prisma.game.update({
-      where: { id: sessionID },
-      data: {
-        timeTaken: formattedTime,
-      },
-    });
-
-    return { timeTaken: formattedTime };
-  } catch (error) {
-    console.error("Error ending game and getting time taken:", error);
-    throw new Error('Could not end the game and get time taken.');
-  } finally {
-    await prisma.$disconnect(); // Disconnect Prisma client
-  }
-};
-
-// Function to submit username with session ID
-export const submitUsernameWithSession = async (sessionID: string, userName: string) => {
-  try {
     const updatedGame = await prisma.game.update({
       where: { id: sessionID },
       data: {
         userName,
+        timeTaken: formattedTime,
       },
     });
 
