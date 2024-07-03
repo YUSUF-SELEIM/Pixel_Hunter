@@ -77,6 +77,13 @@ export default function Home() {
             </CardContainer>
           ))}
         </div>
+        <div className='flex justify-center items-center'>
+          <button
+            className="w-full btn btn-outline text-cyan-500 hover:bg-cyan-500 hover:text-white"
+          >
+            <Link href={`/leaderboard/${1}`}>Leaderboard</Link>
+          </button>
+        </div>
       </main>
       <Footer />
     </>
