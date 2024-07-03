@@ -34,7 +34,9 @@ const images = [
 export default function Home() {
   return (
     <>
-      <Header />
+      <Header>
+        {null}
+      </Header>
       <main className="w-full bg-gray-200 min-h-screen p-12">
         <h1 className="text-4xl text-center font-bold text-cyan-500">Choose a Game</h1>
         <div className="w-full flex flex-col md:flex-row justify-between md:space-x-4 p-1">
