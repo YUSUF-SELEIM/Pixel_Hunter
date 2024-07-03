@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  id        String   @id @default(uuid()) @map("_id")
+  imageID   String
+  startTime DateTime
+  endTime   DateTime?
+  userName  String?
+  timeTaken String?
+}
