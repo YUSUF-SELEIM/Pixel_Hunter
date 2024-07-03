@@ -1,7 +1,7 @@
 const imageData = [
     {
       id: '1',
-      src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-1.webp',
+      src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Image-1.webp',
       alt: 'A Crowd of Weird Faces I',
       characters:
         [
@@ -27,7 +27,7 @@ const imageData = [
     },
     {
       id: '2',
-      src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-3.webp',
+      src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Image-2.webp',
       alt: 'A Crowd of Weird Faces II',
       characters:
         [
@@ -60,7 +60,7 @@ const imageData = [
     },
     {
       id: '3',
-      src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/I-2.webp',
+      src: 'https://wsrv.nl/?url=https://raw.githubusercontent.com/YUSUF-SELEIM/Pixel_Hunter/main/illustrations/Image-3.webp',
       alt: 'Ice Creams and Lollipop',
       characters:
         [
