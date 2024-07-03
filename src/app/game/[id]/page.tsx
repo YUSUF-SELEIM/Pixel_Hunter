@@ -5,6 +5,7 @@ import Header from '../../components/header';
 import Footer from '../../components/footer';
 import imageData from '@/data/ImageData';
 import Modal from '../../components/modal';
+import Timer from '../../components/timer';
 
 function Game({ params }: { params: { id: string } }) {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -15,6 +16,8 @@ function Game({ params }: { params: { id: string } }) {
   const [charactersFound, setCharactersFound] = useState<string[]>([]);
   const [gameOver, setGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [sessionID, setSessionID] = useState('');
+  const [timeTaken, setTimeTaken] = useState(0);
 
   useEffect(() => {
     // Function to update found characters
@@ -41,9 +44,7 @@ function Game({ params }: { params: { id: string } }) {
             const imageElement = document.getElementById('image');
 
             if (imageElement) {
-              imageElement.appendChild(marker); // Fallback to body if container not found
-            } else {
-              document.body.appendChild(marker); // Fallback to body if container not found
+              imageElement.appendChild(marker);
             }
             console.log('Added marker for:', character.Name);
           }
@@ -147,68 +148,77 @@ function Game({ params }: { params: { id: string } }) {
     if (allCharactersFound) {
       setGameOver(true);
       setShowModal(true);
+      setCharactersFound([]);
     }
     setPopupVisible(false);
   }
 
   return (
     <>
-      <Header />
-      <div className="bg-gray-50 relative overflow-x-hidden" onClick={handleHidePopup}>
-        <div id='image' className="relative w-full h-full" onClick={handleImageClick}>
-          <Image
-            src={image.src}
-            alt={image.alt}
-            layout="responsive"
-            width={2000}
-            height={1000}
-            className="cursor-crosshair"
-          />
-          {circleVisible && (
-            <div
-              className="absolute rounded-full border-4 border-red-500 border-dashed"
-              style={{
-                top: `calc(${circlePosition.y}% - 25px)`,
-                left: `calc(${circlePosition.x}% - 25px)`,
-                width: '50px',
-                height: '50px',
-              }}
+      <Header>
+        <Timer imageID={params.id} gameOver={gameOver} sessionID={sessionID} setSessionID={setSessionID} timeTaken={timeTaken} setTimeTaken={setTimeTaken} />
+      </Header>
+      {sessionID ? (
+        <div className="bg-gray-50 relative overflow-x-hidden" onClick={handleHidePopup}>
+          <div id="image" className="relative w-full h-full" onClick={handleImageClick}>
+            <Image
+              src={image.src}
+              alt={image.alt}
+              layout="responsive"
+              width={2000}
+              height={1000}
+              className="cursor-crosshair"
             />
+            {circleVisible && (
+              <div
+                className="absolute rounded-full border-4 border-red-500 border-dashed"
+                style={{
+                  top: `calc(${circlePosition.y}% - 25px)`,
+                  left: `calc(${circlePosition.x}% - 25px)`,
+                  width: '50px',
+                  height: '50px',
+                }}
+              />
+            )}
+          </div>
+          {popupVisible && (
+            <div
+              className="absolute bg-white shadow-lg p-2 rounded"
+              style={{
+                top: `calc(${popupPosition.y} + 5%)`,
+                left: `calc(${popupPosition.x} + 9%)`,
+                transform: 'translate(-50%, -50%)', // Center align the popup
+                ...(window.innerWidth <= 768 && {
+                  // Mobile adjustments
+                  top: `calc(${popupPosition.y} + 5%)`,
+                  left: `calc(${popupPosition.x} + 17%)`,
+                  transform: 'translate(-50%, 0)',
+                }),
+              }}
+            >
+              {image.characters.map((character) => {
+                if (!character.found) {
+                  return (
+                    <div
+                      key={character.Name}
+                      className="md:text-xl text-xs md:p-2 p-1 cursor-pointer text-black hover:bg-gray-200 flex items-center space-x-4"
+                      onClick={() => didFindCharacter(character.Name)}
+                    >
+                      <Image src={character.src} alt={character.Name} width={30} height={30} />
+                      <p className="text-sm">{character.Name}</p>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
           )}
         </div>
-        {popupVisible && (
-          <div
-            className="absolute bg-white shadow-lg p-2 rounded"
-            style={{
-              top: `calc(${popupPosition.y} + 5%)`,
-              left: `calc(${popupPosition.x} + 9%)`,
-              transform: 'translate(-50%, -50%)', // Center align the popup
-              ...(window.innerWidth <= 768 && {
-                // Mobile adjustments
-                top: `calc(${popupPosition.y} + 5%)`,
-                left: `calc(${popupPosition.x} + 17%)`,
-                transform: 'translate(-50%, 0)',
-              }),
-            }}
-          >
-            {image.characters.map((character) => {
-              if (!character.found) {
-                return (
-                  <div
-                    key={character.Name}
-                    className="md:text-xl text-xs md:p-2 p-1 cursor-pointer text-black hover:bg-gray-200 flex items-center space-x-4"
-                    onClick={() => didFindCharacter(character.Name)}
-                  >
-                    <Image src={character.src} alt={character.Name} width={30} height={30} />
-                    <p className="text-sm">{character.Name}</p>
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        )}
-      </div>
+      ) : (
+        <div className="flex justify-center items-center h-screen bg-gray-100">
+          <span className="loading loading-ball w-40 text-cyan-500"></span>
+        </div>
+      )}
       {showToast && (
         <div className="fixed top-0 left-0 right-0 flex justify-center mt-3 slide-down">
           <div className="bg-red-500 text-white py-2 px-4 rounded">
@@ -217,7 +227,7 @@ function Game({ params }: { params: { id: string } }) {
         </div>
       )}
       {gameOver && (
-        <Modal showModal={showModal} setShowModal={setShowModal} />
+        <Modal showModal={showModal} sessionID={sessionID} timeTaken={timeTaken} />
       )}
       <Footer />
     </>
