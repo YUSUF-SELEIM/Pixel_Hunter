@@ -10,8 +10,6 @@ datasource db {
 model Game {
   id        String   @id @default(uuid()) @map("_id")
   imageID   String
-  startTime DateTime
-  endTime   DateTime?
   userName  String?
   timeTaken String?
 }
